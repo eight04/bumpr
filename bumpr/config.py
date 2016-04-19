@@ -31,6 +31,7 @@ DEFAULTS = {
     'clean': None,
     'tests': None,
     'publish': None,
+    'test_only': False,
     'bump_only': False,
     'prepare_only': False,
     'files': [],
@@ -120,6 +121,7 @@ class Config(ObjectDict):
                 self[arg] = True
 
         self.commit = not parsed_args.nocommit  # pylint: disable=W0201
+        self.test_only = parsed_args.test_only  # pylint: disable=W0201
         self.bump_only = parsed_args.bump_only  # pylint: disable=W0201
         self.prepare_only = parsed_args.prepare_only  # pylint: disable=W0201
 
@@ -157,6 +159,7 @@ class Config(ObjectDict):
         parser.add_argument('-d', '--dryrun', action='store_true', help='Do not write anything and display a diff')
 
         group = parser.add_mutually_exclusive_group()
+        group.add_argument('-t', '--test', dest='test_only', action='store_true', help='Only perform the test')
         group.add_argument('-b', '--bump', dest='bump_only', action='store_true', help='Only perform the bump')
         group.add_argument('-pr', '--prepare', dest='prepare_only', action='store_true',
             help='Only perform the prepare')
