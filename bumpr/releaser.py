@@ -140,12 +140,12 @@ class Releaser(object):
             diff = unified_diff(before.split('\n'), after.split('\n'), lineterm='')
             self.diffs[filename] = diff
         else:
-            with open(filename, 'wb') as f:
-                f.write(after.encode(self.config.encoding))
+            with open(filename, 'w', encoding=self.config.encoding) as f:
+                f.write(after)
 
     def bump_files(self, replacements):
         for filename in [self.config.file] + self.config.files:
-            with open(filename, 'r', self.config.encoding) as current_file:
+            with open(filename, 'r', encoding=self.config.encoding) as current_file:
                 before = current_file.read()
             after = before
             for token, replacement in replacements:
