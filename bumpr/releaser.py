@@ -64,7 +64,9 @@ class Releaser(object):
     def release(self):
         self.timestamp = datetime.now()
 
-        if self.config.bump_only:
+        if self.config.test_only:
+            self.test()
+        elif self.config.bump_only:
             self.bump()
         elif self.config.prepare_only:
             self.prepare()
