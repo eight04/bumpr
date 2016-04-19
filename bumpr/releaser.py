@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals
 
-import codecs
 import logging
 import re
+import sys
+
+if sys.version_info < (3, 0):
+	from io import open
 
 from datetime import datetime
 from difflib import unified_diff
@@ -142,7 +145,7 @@ class Releaser(object):
 
     def bump_files(self, replacements):
         for filename in [self.config.file] + self.config.files:
-            with codecs.open(filename, 'r', self.config.encoding) as current_file:
+            with open(filename, 'r', self.config.encoding) as current_file:
                 before = current_file.read()
             after = before
             for token, replacement in replacements:
